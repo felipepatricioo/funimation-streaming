@@ -15,6 +15,7 @@ model Users {
   name      String
   email     String   @unique
   password  String
+  animes    Animes[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -32,4 +33,5 @@ model Animes {
   director    String
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+  users       Users[]
 }

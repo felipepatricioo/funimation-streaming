@@ -85,4 +85,50 @@ export class UsersService {
     }
     return { message: 'User Successfully removed!' };
   }
+
+  async watchedAnimes(user: Users, id: string) {
+    const anime = await this.db.animes.findUnique({
+      where: { id },
+    });
+
+    if (!anime) {
+      throw new NotFoundException('Anime not found!');
+    }
+
+    const userAnime = await this.db.users.update({
+      where: { id: user.id },
+      data: {
+        animes: {
+          connect: {
+            id: anime.id,
+          },
+        },
+      },
+      include: {
+        animes: true,
+      },
+    });
+
+    if (userAnime) {
+      const userAnime = await this.db.users.update({
+        where: { id: user.id },
+        data: {
+          animes: {
+            disconnect: {
+              id: anime.id,
+            },
+          },
+        },
+        include: {
+          animes: true,
+        },
+      });
+
+      delete userAnime.password;
+      return userAnime;
+    }
+
+    delete userAnime.password;
+    return userAnime;
+  }
 }
