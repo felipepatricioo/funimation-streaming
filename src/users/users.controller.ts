@@ -19,7 +19,6 @@ import AuthUser from 'src/auth/auth-user.decorator';
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  @UseGuards(AuthGuard())
   @Post('create')
   create(@Body() createUserDto: CreateUserDto): Promise<Users> {
     return this.usersService.create(createUserDto);
