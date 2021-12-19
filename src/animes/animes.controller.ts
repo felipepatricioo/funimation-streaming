@@ -14,7 +14,7 @@ import { UpdateAnimeDto } from './dto/update-anime.dto';
 import { Animes } from '@prisma/client';
 import { AuthGuard } from '@nestjs/passport';
 
-@Controller('animes')
+@Controller()
 export class AnimesController {
   constructor(private readonly animesService: AnimesService) {}
 
